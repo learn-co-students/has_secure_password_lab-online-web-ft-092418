@@ -8,8 +8,15 @@ class UsersController < ApplicationController
     end
 
     def create
-        User.create(user_params)
-        redirect_to root_path
+        @user = User.create(user_params)
+        if @user.password == @user.password_confirmation
+            session[:user_id] = @user.id
+            redirect_to root_path
+        else 
+            redirect_to new_user_path
+            
+            
+        end
     end
 
     private
